@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to R.E.P.O</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Press Start 2P', cursive;
+      background-color: #0044ff;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .welcome-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #002fff;
+      color: #00ffea;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      text-align: center;
+      text-shadow: 2px 2px #ff00c8;
+      padding: 20px;
+    }
+
+    .welcome-screen h1 {
+      font-size: 6rem;
+      margin-bottom: 1rem;
+    }
+
+    .welcome-screen p {
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .welcome-screen button {
+      font-size: 0.75rem;
+      padding: 12px 20px;
+      background: #001aff;
+      color: #00d9ff;
+      border: 3px solid #00ffea;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Press Start 2P', cursive;
+      text-shadow: 1px 1px #ff00c8;
+      transition: background-color 0.2s ease;
+    }
+
+    .welcome-screen button:hover {
+      background-color: #111;
+    }
+
+    .fade-out {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .main-content {
+      display: none;
+      height: 100vh;
+      overflow-y: auto;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .main-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .main-title {
+      font-size: 3rem;
+      color: #00ffea;
+      background: #000;
+      padding: 10px 20px;
+      border: 4px double #00ffea;
+      border-radius: 8px;
+      text-shadow: 2px 2px 0 #ff00c8;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .link-button {
+      display: block;
+      margin: 10px auto;
+      padding: 16px 28px;
+      font-size: 1rem;
+      background-color: #000;
+      color: #00ffea;
+      border: 3px solid #00ffea;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Press Start 2P', cursive;
+      text-shadow: 1px 1px #ff00c8;
+      transition: background-color 0.2s ease;
+    }
+
+    .link-button:hover {
+      background-color: #0044ff;
+    }
+
+    .description {
+      display: none;
+      background-color: #002fff;
+      padding: 15px;
+      margin: 10px auto 30px;
+      border-left: 4px solid #007BFF;
+      border-radius: 6px;
+      max-width: 700px;
+      text-align: left;
+    }
+
+    .description img {
+      margin-top: 10px;
+      max-width: 100%;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="welcome-screen" id="welcomeScreen">
+    <h1>Welcome to R.E.P.O</h1>
+    <p>Get ready to read the guides!</p>
+    <button id="enterButton" onclick="enterSite()">Enter</button>
+  </div>
+
+  <div class="main-content" id="mainContent">
+    <div class="main-header">
+      <div class="main-title">R.E.P.O</div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="your-music-file.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const buttons = [
+  { title: "Apex Predator", desc: "The Apex Predator may be REPO’s cutest monster, but its looks are deceiving. This little duck will follow you everywhere, trying to get your attention by jumping in front of you, and especially trying to have you click on it. If you do, it will reveal its monstrous form and fly at you, trying to bite you. Best to take your time when this guy is around." },
+  { title: "Animal", desc: "The Animal is more of a nuisance, but it can go wild and damage your valuables if it’s set off and near your cart. It can crawl into you, stunning you, and start throwing everything around, so be careful. However, their attacks are not powerful, so you don’t need to worry too much. They are one of the least threatening monsters in the game, even if they do look a bit grotesque. Just keep your things away from them." },
+  { title: "Banger", desc: "These little skulls don’t hide their secret very well. The lit sticks of dynamite should give you a clue that these guys will explode if they get too close to you. They only do 30 damage when exploding, but they do like to run around in packs, so if you get hit by more than a couple, it’s likely lights out for you. Try to keep your distance." },
+  { title: "Big Banger", desc: "The Bowtie looks like a slightly deflated Stay Puft Marshmellow Man, but it can be pretty deadly. If it sees you, it will start a big gust attack. If you stay within its range and it ends up pushing you against a wall, you will lose a lot of life, so try to get out of its area-of-effect if it’s about pin you against something." },
+  { title: "Blimp", desc: "These little frog-based chefs can be a little wild. When they notice you, they will stop and line you up, before jumping in your direction, flailing knives everywhere. You can get hit by multiple swings per bounce, so be careful to stay out of their way. Make sure to move right before they jump, and you should be mostly fine." },
+  { title: "Brain", desc: "The Clown is one of the game’s most intimidating-looking monsters, and can be a massive threat if you’re clumsy. If they spot you, they produce a beam that, without health upgrades, is a one-hit kill. That means it’s always dangerous. However, if you expect it, it’s not too hard to dodge. You need to identify if it’s going to shoot the beam high or low, and then jump or duck accordingly. This shouldn't be a big issue if you’re confident in your movement. Still, one wrong move, and you’re probably out. They also like to give a little kick, so keep your distance." },
+  { title: "Chomper", desc: "Gnomes are annoying little guys who can do a lot of damage to your runs if you underestimate them. For the most part, they aren’t a threat to you, as you can just lift them up and smash them. They do tend to move in a group, but are most annoying when they purposefully target your valuables to destroy their price. However, they also have this awful tendency to swarm you when you’re hiding from bigger threats, making them potentially dangerous in the right or wrong situations." },
+  { title: "Headman", desc: "The Headman is one of REPO’s most deadly monsters, and there is no reliable way of dealing with it unless you have a gun. Even then, that will aggro it, having it charge you down before you can dispatch it. The one thing going for you is that it doesn’t have great eyesight, so staying crouched and hidden is your best bet. However, if it sees you, it’s very fast, and its attack, which does 50 damage, will stun you, making it so getting hit is almost definitely a death sentence." },
+  { title: "Faker", desc: "The Hidden is mostly harmless on its own, but in practice, it is actually potentially one of the more dangerous monsters in the game. This creature is entirely invisible, except for some breath and footsteps it leaves while moving around. When it gets you, it won’t attack but instead lift you up and sprint with you to somewhere far away on the map. This will isolate you from your team, and it can drop you right in front of dangerous monsters. Be very careful, as in the right circumstances, the Hidden could drop you next to a Headman, essentially killing you." },
+  { title: "Ghost", desc: "The Huntsman is another of the game’s most dangerous enemies. If he hears you, he is a one-hit kill if you have no health upgrades. The only saving grace is that the Huntsman is blind. He won’t be able to see you, but you and your friends need to be quiet, as he is a great shot if he hears you either by talking or your footsteps. You can tap objects away from you to draw his attention away, but it’s best to just not talk when this guy is around, otherwise it’s instant death." },
+  { title: "Hunter", desc: "The Peeper is a very disorientating enemy that can be dangerous if another monster is around. When you walk into a room with this eyeball on the ceiling, your perspective will be forced to look at the eye. You then need to break the line of sight to move your camera again, so try to get an object between you and it. If it holds your gaze for three seconds, it will begin to damage you for 2 per second." },
+  { title: "Lurker", desc: "The Mentalist is an interesting little alien who can be a problem if it surprises you. If you get too close to it, it will begin to lift you, your friends, and all objects within an orb around it. After a couple of seconds, it will then slam you down for 50 damage. It can also teleport on the map anytime, so it can move a lot and surprise you." },
+  { title: "Medic", desc: "The Reaper can be a pretty dangerous monster in the right circumstances and can absolutely wreck the value of items you find. This walking scarecrow with blades for arms will swing wildly and quickly, not unlike the Chefs, if it detects you. This can be really bad news for you if you’re close and get hit multiple times. What's worse is that if it’s attacking next to your cart with all your items in it, it can set you back to almost zero. Just be patient and let this monster pass on while you hide." },
+  { title: "Mimic", desc: "The Robe is one of the most terrifying monsters in REPO. This tall looming figure loves to creep behind you, haunting you without you knowing. Then, when you turn around and see it, it will pounce on you, giving you a big fright and one-shotting you if you have no health upgrades. It can also reach you under tables, so be careful. Your best bet is not to turn around, but if you look down and use your peripheral vision, you can usually see if it’s near. Just let it pass on, by not turning around if at all possible." },
+  { title: "Parasite", desc: "The Rugrat is a real pain. Not only can it do a variable amount of damage, but it also uses your own valuables against you. While you can move around the Rugrat without it doing anything to you, the second it grabs an valuable, it will stop and try to hurl it at you, both hurting you and the valuable. Try to keep your best goods out of this toddler’s reach." },
+  { title: "Queen", desc: "The Shadow Child looks intimidating, but it is not actually that bad and is one of the easier-to-avoid monsters. When it is near, you will hear a child laugh. All you need to do is not look a this monster directly. If you do stare at it, you have four seconds to look away. If you don’t, it will hit you for 30 and push you backwards, stunning you. So the solution is this - don’t look at it for longer than four seconds. Before long, the Shadow Child will teleport, and you can continue your business." },
+  { title: "Rage", desc: "The Spewer is a strange little monster that isn’t actually a massive threat. In fact, it could even be of help to you. When these fish-like monsters get you, they will take over your face, lowering your voice. You will then periodically vomit, hurting anything you hit. As long as you don’t throw up on your friends, you can use this monster to damage enemies, as the vomit will damage them too. But you can also just sit in a corner with your face turned away to try and not hit allies." },
+  { title: "Shield", desc: "Trudge is the monster in the game with the most health, and it does have a one-hit attack, but that doesn’t actually make it that dangerous. This monster is exceptionally slow-moving and doesn’t offer a huge threat as long as you stay out of its view. However, it can pull you and allies close to it from a fair distance away, so always be trying to hide and let it pass - even if it can take an age for it to do so." },
+  { title: "Tank", desc: "The Upscream is more of a nuisance than a threat. Its little smiling face is deceptive, as if you get close, it will scream at you, forcing your perspective while doing 10 damage and stunning you. If they decide to keep attacking you, this can stun lock you, though they will often move on after an attack or two. They only have 50 health, so if you have a way of dealing damage, it won’t take long to get rid of these guys." },
+  { title: "help", desc: "Need help? click this link! jk, there is no link lol" }
+];
+
+
+    function enterSite() {
+      const welcome = document.getElementById('welcomeScreen');
+      const main = document.getElementById('mainContent');
+      const music = document.getElementById('bgMusic');
+
+      welcome.classList.add('fade-out');
+
+      setTimeout(() => {
+        welcome.style.display = 'none';
+        main.style.display = 'flex';
+        music.play();
+      }, 1000);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const header = document.querySelector('.main-header');
+      buttons.forEach((b, i) => {
+        const btn = document.createElement('button');
+        btn.className = "link-button";
+        btn.innerText = b.title;
+        btn.onclick = () => {
+          const box = document.getElementById(`desc${i}`);
+          box.style.display = box.style.display === 'block' ? 'none' : 'block';
+        };
+
+        const desc = document.createElement('div');
+        desc.className = "description";
+        desc.id = `desc${i}`;
+        desc.innerHTML = `<p>${b.desc}</p>`;
+
+        header.appendChild(btn);
+        header.appendChild(desc);
+      });
+    });
+  </script>
+
+</body>
+</html>
